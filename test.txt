@@ -1,1 +1,7 @@
-this is faiz testing github
+git clone {url}
+git add .
+git commit -m "Message"
+git push
+
+cd .. - >back a folder
+cd ./foldername
