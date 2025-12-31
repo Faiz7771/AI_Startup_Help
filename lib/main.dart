@@ -27,15 +27,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -43,52 +34,374 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController _ipController= TextEditingController();
-  Future<void> sharedpref() async{
-    final _ipc=_ipController.text.trim();
-    SharedPreferences SP= await SharedPreferences.getInstance();
-    final url= 'http://$_ipc:8000';
-    final img_url = 'http://$_ipc:8000';
-    SP.setString('ip', url);
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
+  TextEditingController _ipController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  bool _isConnecting = false;
+
+  Future<void> sharedpref() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() {
+      _isConnecting = true;
+    });
+
+    try {
+      final _ipc = _ipController.text.trim();
+      SharedPreferences SP = await SharedPreferences.getInstance();
+      final url = 'http://$_ipc:8000';
+      SP.setString('ip', url);
+
+      // Add a small delay for better UX
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      if (mounted) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Connection failed: $e'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isConnecting = false;
+        });
+      }
+    }
+  }
+
+  String? _validateIP(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter an IP address';
+    }
+
+    // Basic IP validation (simple pattern)
+    final ipPattern = RegExp(r'^\d{1,3}(\.\d{1,3}){3}$');
+    if (!ipPattern.hasMatch(value.trim())) {
+      return 'Please enter a valid IP address (e.g., 192.168.1.100)';
+    }
+
+    return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text("AI STARTUP HELP"),
-        actions: [IconButton(onPressed: (){}, icon: Icon(Icons.account_circle))],
+        title: const Text(
+          "AI STARTUP HELP",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.account_circle, size: 28),
+          )
+        ],
         elevation: 4,
-
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Text('Enter ip address :'),
-                const SizedBox(height: 18),
-                TextFormField(
-                    controller: _ipController,
-                    decoration: InputDecoration(labelText: 'ip', hintText: 'ip')),
-                const SizedBox(height: 18),
-                ElevatedButton(onPressed: sharedpref, child: Text('Connect'))
-              ],
-            )
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Logo/Icon Section
+              Container(
+                margin: const EdgeInsets.only(bottom: 32),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: AppTheme.primaryOrange.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.wifi_find_rounded,
+                  size: 64,
+                  color: AppTheme.primaryOrange,
+                ),
+              ),
+
+              // Title
+              const Text(
+                'Server Configuration',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              // Subtitle
+              const Text(
+                'Enter your server IP address to connect',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+
+              const SizedBox(height: 32),
+
+              // Form Card
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      blurRadius: 20,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(24),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // IP Input Field
+                      const Text(
+                        'Server IP Address',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      TextFormField(
+                        controller: _ipController,
+                        validator: _validateIP,
+                        decoration: InputDecoration(
+                          hintText: 'e.g., 192.168.1.100',
+                          hintStyle: const TextStyle(color: Colors.grey),
+                          prefixIcon: const Icon(
+                            Icons.dns_rounded,
+                            color: AppTheme.primaryOrange,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: const Icon(
+                              Icons.info_outline_rounded,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text('IP Address Help'),
+                                  content: const Text(
+                                    'Enter the IP address of your AI Startup Help server.\n\n'
+                                        'Format: XXX.XXX.XXX.XXX\n'
+                                        'Port: 8000 (default)\n\n'
+                                        'Example: 192.168.1.100',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey.shade50,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                              color: AppTheme.primaryOrange,
+                              width: 2,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 16,
+                          ),
+                        ),
+                        keyboardType: TextInputType.number,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        onFieldSubmitted: (_) => sharedpref(),
+                      ),
+
+                      const SizedBox(height: 24),
+
+                      // Connection Status & Button
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // Connection Button
+                          ElevatedButton(
+                            onPressed: _isConnecting ? null : sharedpref,
+                            child: _isConnecting
+                                ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Text(
+                                  'Connecting...',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white.withOpacity(0.9),
+                                  ),
+                                ),
+                              ],
+                            )
+                                : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.link_rounded,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  'Connect to Server',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white.withOpacity(0.95),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          // Help Text
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.blue.shade100,
+                                width: 1,
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.help_outline_rounded,
+                                  color: Colors.blue.shade600,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    'Ensure the server is running on port 8000',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.blue.shade800,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 32),
+
+              // Quick Help Section
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade50,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Common IP Addresses:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        _buildIPChip('127.0.0.1', 'Localhost'),
+                        _buildIPChip('192.168.1.1', 'Router'),
+                        _buildIPChip('10.0.0.1', 'Network'),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildIPChip(String ip, String label) {
+    return ActionChip(
+      label: Text('$ip ($label)'),
+      onPressed: () {
+        _ipController.text = ip;
+        if (_formKey.currentState != null) {
+          _formKey.currentState!.validate();
+        }
+      },
+      backgroundColor: Colors.white,
+      avatar: Icon(
+        Icons.copy_all_rounded,
+        size: 16,
+        color: AppTheme.primaryOrange,
+      ),
+      side: BorderSide(
+        color: Colors.grey.shade300,
+        width: 1,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
       ),
     );
   }
@@ -144,7 +457,7 @@ class AppTheme {
 }
 
 // =====================================================
-// FLASHCARD STYLE BUTTON (FOR FUTURE HOMEPAGE UI)
+// FLASHCARD STYLE BUTTON (ALTERNATIVE - FILLED BACKGROUND)
 // =====================================================
 class FlashCardButton extends StatelessWidget {
   final String title;
@@ -158,22 +471,28 @@ class FlashCardButton extends StatelessWidget {
     required this.onTap,
   });
 
+  // Helper method to abbreviate long titles
+  String get _displayTitle {
+    // Return abbreviated versions for long titles
+    final titleMap = {
+      'Issue a Complaint': 'Complaint',
+      'Submit Personal Details': 'Submit Details',
+      'Look into Trending Ideas': 'Trending Ideas',
+      'Request Expert Idea': 'Expert Request',
+      'Review and Rate our app✨': 'Rate & Review',
+    };
+
+    return titleMap[title] ?? title;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 100, // increase from ~140
-        width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
-          image: DecorationImage(
-            image: AssetImage(imagePath),
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.45),
-              BlendMode.darken,
-            ),
-          ),
+          color: Colors.grey.shade900, // Solid dark background
           boxShadow: const [
             BoxShadow(
               color: Colors.black26,
@@ -182,46 +501,46 @@ class FlashCardButton extends StatelessWidget {
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              title,
-              style: const TextStyle(
-                color: Color(0xFFFFBB71),
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+        child: Stack(
+          children: [
+            // Position your logo image on the right side
+            Positioned(
+              right: 8,
+              top: 8,
+              bottom: 8,
+              child: Container(
+                width: 80, // Adjust based on your logo size
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
-          ),
+
+            // Text on the left side - WITH FLEXIBLE CONTAINER
+            Positioned(
+              left: 16,
+              top: 0,
+              bottom: 0,
+              right: 90, // Leave space for logo
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  _displayTitle, // Use abbreviated title
+                  style: const TextStyle(
+                    color: Color(0xFFFFBB71),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    height: 1.2, // Better line spacing
+                  ),
+                  maxLines: 3, // Allow up to 3 lines
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-// =====================================================
-// RESPONSIVE GRID USAGE EXAMPLE (HOMEPAGE)
-// =====================================================
-/*
-GridView.count(
-  crossAxisCount: MediaQuery.of(context).size.width < 400 ? 1 : 2,
-  crossAxisSpacing: 16,
-  mainAxisSpacing: 16,
-  padding: const EdgeInsets.all(16),
-  children: [
-    FlashCardButton(
-      title: 'Ask Doubts',
-      imagePath: 'assets/doubts.jpg',
-      onTap: () {},
-    ),
-    FlashCardButton(
-      title: 'Experts',
-      imagePath: 'assets/experts.jpg',
-      onTap: () {},
-    ),
-  ],
-);
-*/
-

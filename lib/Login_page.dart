@@ -39,10 +39,27 @@ class _LoginState extends State<Login> {
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
-                    Icon(
-                      Icons.account_circle_rounded,
-                      size: 80,
-                      color: Colors.orange.shade700,
+                    Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 10,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.asset(
+                          'assets/aisuh.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     Text(
