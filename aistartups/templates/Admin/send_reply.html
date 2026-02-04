@@ -1,0 +1,17 @@
+{% extends 'Admin/admin_header.html' %}
+<html>
+<head>
+    <title>Send a reply</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+{% block body %}
+<body>
+<form action="/myapp/send_reply_post/" method="post">
+    <input type="hidden" value="{{ data.id }}" name="id">
+    <h1>Reply: </h1>
+    <input type="text" placeholder="-Enter the Reply-" name="REPLY"><br><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+{% endblock %}
+</html>

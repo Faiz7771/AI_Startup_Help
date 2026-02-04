@@ -1,0 +1,28 @@
+{% extends 'Expert/expert_header.html' %}
+{% block exp %}
+<html>
+<head>
+    <title>Change your password</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+<body>
+<br>
+{% if messages %}
+
+{% for i in messages %}
+<div class="alert alert-danger">{{ i }}</div>
+{% endfor %}
+{% endif %}
+<form action="/myapp/change_pass_e_post/" method="post">
+    <h1>Change Password</h1>
+    <label>Current Password:</label>
+    <input type="password" placeholder="-Enter previous password-" name="CURRENTPASS"><br><br>
+    <label>New Password:</label>
+    <input type="password" placeholder="-Enter new password-" name="NEWPASS"><br><br>
+    <label>Confirm Password:</label>
+    <input type="password" placeholder="-Enter again-" name="CONFIRMPASS"><br><br>
+    <button type="submit">Submit</button>
+</form>
+</body>
+{% endblock %}
+</html>

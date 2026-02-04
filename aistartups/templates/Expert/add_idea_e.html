@@ -1,0 +1,21 @@
+{% extends 'Admin/admin_header.html' %}
+<html>
+<head>
+    <title>Add startup Idea</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+{% block body %}
+<body>
+<form action="/myapp/add_idea_post/" method="post">
+    <h1>Add your startup idea</h1>
+    <label>Title:</label>
+    <input type="text" placeholder="-Enter Idea Title-" name="TITLE"><br><br>
+    <label>Description:</label>
+    <input type="text" placeholder="-Enter Description-" name="DESCRIPTION"><br><br>
+    <label>Technology:</label>
+    <input type="text" placeholder="-Enter Technology used-" name="TECHNOLOGY"><br><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+{% endblock %}
+</html>

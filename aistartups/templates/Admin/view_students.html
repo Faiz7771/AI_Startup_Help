@@ -1,0 +1,31 @@
+{% extends 'Admin/admin_header.html' %}
+<html>
+<head>
+    <title>View Students Table</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+{% block body %}
+<body>
+<table border="2">
+    <thead>
+    <th>SI_No</th>
+    <th>Photo</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Address</th>
+    </thead>
+    {% for i in data %}
+    <tbody>
+    <td>{{ forloop.counter }}</td>
+    <td><img src="/media/{{ i.photo }}" height="120" width="120"></td>
+    <td>{{ i.name }}</td>
+    <td>{{ i.email }}</td>
+    <td>{{ i.phone }}</td>
+    <td>{{ i.place }}</td>
+    </tbody>
+    {% endfor %}
+</table>
+</body>
+{% endblock %}
+</html>

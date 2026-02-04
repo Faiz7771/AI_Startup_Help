@@ -1,0 +1,37 @@
+{% extends 'Admin/admin_header.html' %}
+<html>
+<head>
+    <title>View Complaints and Send Reply</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+{% block body %}
+<body>
+<table border="2">
+    <thead>
+    <th>SI_No</th>
+    <th>Date</th>
+    <th>Complaint</th>
+    <th>User_Details</th>
+    <th>Reply</th>
+    <th>Action</th>
+    </thead>
+    {% for i in data %}
+    <tbody>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ i.date }}</td>
+    <td>{{ i.complaints }}</td>
+    <td>
+        Name: {{ i.user.name }}<br>
+        Phone: {{ i.user.email }}<br>
+
+    </td>
+    <td>{{ i.reply }}</td>
+    <td>
+        <a href="/myapp/send_reply/{{ i.id }}">Reply</a><br>
+    </td>
+    </tbody>
+    {% endfor %}
+</table>
+</body>
+{% endblock %}
+</html>

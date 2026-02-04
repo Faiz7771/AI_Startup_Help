@@ -1,0 +1,30 @@
+{% extends 'Expert/expert_header.html' %}
+{% block exp %}
+<html>
+<head>
+    <title>View Reviews and Ratings</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+<body>
+<br>
+<table border="2">
+    <thead>
+    <th>SI_No</th>
+    <th>Date</th>
+    <th>Rating</th>
+    <th>Review</th>
+    <th>Details</th>
+    </thead>
+    {% for i in data %}
+    <tbody>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ i.date }}</td>
+    <td>{{ i.rating }}</td>
+    <td>{{ i.review }}</td>
+    <td>{{ i.user }}</td>
+    </tbody>
+    {% endfor %}
+</table>
+</body>
+{% endblock %}
+</html>

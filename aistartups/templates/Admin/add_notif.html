@@ -1,0 +1,19 @@
+{% extends 'Admin/admin_header.html' %}
+<html>
+<head>
+    <title>Add Notification</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+{% block body %}
+<body>
+<form action="/myapp/add_notif_post/" method="post">
+    <h1>Add Notifications</h1><br>
+    <label>Title:</label>
+    <input type="text" placeholder="-Enter Title-" name="TITLE"><br><br>
+    <label>Notification:</label>
+    <input type="text" placeholder="-Enter the Notification to be displayed-" name="NOTIFICATION"><br><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+{% endblock %}
+</html>

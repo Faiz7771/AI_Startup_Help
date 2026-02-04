@@ -1,0 +1,27 @@
+{% extends 'Admin/admin_header.html' %}
+<html>
+<head>
+    <title>View Feedback</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+{% block body %}
+<body>
+<table border="2">
+    <thead>
+    <th>SI_No</th>
+    <th>Date</th>
+    <th>Feedback</th>
+    <th>User_details</th>
+    </thead>
+    {%  for i in data %}
+    <tbody>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ i.date }}</td>
+    <td>{{ i.feedback }}</td>
+    <td>{{ i.user.name }}</td>
+    </tbody>
+    {% endfor %}
+</table>
+</body>
+{% endblock %}
+</html>

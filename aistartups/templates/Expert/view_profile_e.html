@@ -1,0 +1,26 @@
+{% extends 'Expert/expert_header.html' %}
+{% block exp %}
+<html>
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+    <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-image: url(/static/assets/img/Profile.jpg);background-position: 200%">
+<br>
+<form>
+    <h1 align="center" class="text-white-50"><b>Profile</b></h1>
+    <img class="rounded-circle" src="/media/{{ data.photo }}" height="120" width="120"><br><br>
+    <label><b style="color: lightpink">Name:</b> {{ data.name }}</label><br><br>
+    <label><b style="color: lightpink">Email:</b> {{ data.email }}</label><br><br>
+    <label><b style="color: lightpink">Phone no.:</b> {{ data.phone }}</label><br><br>
+    <label><b style="color: lightpink">Place:</b> {{ data.place }}</label><br><br>
+    <label><b style="color: lightpink">Post:</b> {{ data.post }}</label><br><br>
+    <label><b style="color: lightpink">Pin:</b> {{ data.pin }}</label><br><br>
+    <label><b style="color: lightpink">District:</b> {{ data.district }}</label><br><br>
+    <a href="/myapp/change_pass_e/">Change Password</a><br><br>
+    <a href="/myapp/edit_profile/">Edit</a>
+</form>
+</body>
+{% endblock %}
+</html>

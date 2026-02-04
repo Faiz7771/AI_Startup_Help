@@ -1,0 +1,618 @@
+{#<!DOCTYPE html>#}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>AI Startup Recommender System</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="/static/assets/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/static/assets/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/static/assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/static/assets/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Template Stylesheet -->
+    <link href="/static/assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border position-relative text-primary" style="width: 6rem; height: 6rem;" role="status"></div>
+        <i class="fa fa-laptop-code fa-2x text-primary position-absolute top-50 start-50 translate-middle"></i>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar End -->
+
+
+    <!-- Brand & Contact Start -->
+{#    <div class="container-fluid py-4 px-5 wow fadeIn" data-wow-delay="0.1s">#}
+{#        <div class="row align-items-center top-bar">#}
+{#            <div class="col-lg-4 col-md-10 text-center text-lg-start">#}
+{#                <a href="" class="navbar-brand m-0 p-0">#}
+{#                    <h1 class="fw-bold text-primary m-0"><i class="fa fa-laptop-code me-2"></i>AIStartupHelp</h1>#}
+{#                    <!-- <img src="/static/assets/img/logo.png" alt="Logo"> -->#}
+{#                </a>#}
+{#            </div>#}
+{##}
+{#            <div class="col-lg-8 col-md-7 d-none d-lg-block">#}
+{#                <div class="row "style="padding-left: 180px">#}
+{##}
+{#                    <div class="col-4">#}
+{#                        <div class="d-flex align-items-center justify-content-end">#}
+{#                            <div class="flex-shrink-0 btn-lg-square border rounded-circle">#}
+{#                                <i class="fa fa-phone text-primary"></i>#}
+{#                            </div>#}
+{#                            <div class="ps-3">#}
+{#                                <pre></pre><p class="mb-2">Call Us</p>#}
+{#                                <h6 class="mb-0">+91 98463 13493</h6>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-4">#}
+{#                        <div class="d-flex align-items-center justify-content-end">#}
+{#                            <div class="flex-shrink-0 btn-lg-square border rounded-circle">#}
+{#                                <i class="far fa-envelope text-primary"></i>#}
+{#                            </div>#}
+{#                            <div class="ps-3">#}
+{#                                <p class="mb-2">Email Us</p>#}
+{#                                <h6 class="mb-0">aistartuphelp@gmail.com</h6>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+    <!-- Brand & Contact End -->
+
+
+    <!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-primary navbar-dark sticky-top py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+
+    <!-- Mobile MENU text -->
+    <a href="#" class="navbar-brand ms-3 d-lg-none">MENU</a>
+
+    <button type="button" class="navbar-toggler me-3" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+
+        <!-- Full row flex container -->
+        <div class="d-flex align-items-center w-100">
+
+            <!-- BRAND (Left) -->
+            <a href="/myapp/expert_homepage/" class="navbar-brand d-flex align-items-center me-5">
+                <img class="rounded-3" src="/static/assets/img/logo-color.png" height="50" width="60" class="me-2 text-white-50">
+                <span class="fw-bold text-black">AIStartupHelp</span>
+            </a>
+
+            <!-- LARGE SPACE -->
+            <div class="flex-grow-1"></div>
+
+            <!-- NAV ITEMS (Right) -->
+            <div class="navbar-nav p-3 p-lg-0">
+
+                <a href="/myapp/expert_homepage/" class="nav-item nav-link active">Home</a>
+                <a href="#pagnav1" class="nav-item nav-link">About Us</a>
+                <a href="/myapp/add_idea_e/" class="nav-item nav-link">Add Idea</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Expert View</a>
+                    <div class="dropdown-menu border-0 rounded-0 rounded-bottom m-0">
+                        <a href="/myapp/view_feedback_e/" class="dropdown-item">View Feedback</a>
+                        <a href="/myapp/view_review_rating_e/" class="dropdown-item">View Reviews & Ratings</a>
+                        <a href="/myapp/view_studentdoubts/" class="dropdown-item">View Student Doubts</a>
+                        <a href="/myapp/view_requests/" class="dropdown-item">View Student Requests & Reply</a>
+                    </div>
+                </div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">More</a>
+                    <div class="dropdown-menu border-0 rounded-0 rounded-bottom m-0">
+                        <a href="/myapp/change_pass_e/" class="dropdown-item">Change Password</a>
+                    </div>
+                </div>
+                <a href="/myapp/view_profile_e/" class="nav-item nav-link"><img class="rounded-3" src="/media/{{ data.photo }}" height="35" width="35">    {{ data.name }}</a>
+                <a href="/myapp/logout/" class="nav-item nav-link"><button class="rounded-3 btn-danger">Logout</button></a>
+
+            </div>
+
+        </div>
+
+    </div>
+</nav>
+    <!-- Navbar End -->
+
+
+    <!-- Carousel Start -->
+    <div class="container-fluid p-0 mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1">
+                    <img class="img-fluid" src="/static/assets/img/carousel_1.jpg" alt="Image">
+                </button>
+                <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="1" aria-label="Slide 2">
+                    <img class="img-fluid" src="/static/assets/img/carousel_2.jpg" alt="Image">
+                </button>
+                <button type="button" data-bs-target="#header-carousel" data-bs-slide-to="2" aria-label="Slide 3">
+                    <img class="img-fluid" src="/static/assets/img/carousel_3.jpg" alt="Image">
+                </button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="w-100" src="/static/assets/img/carousel_1.jpg" alt="Image">
+                    <div class="carousel-caption">
+                        <div class="p-3" style="max-width: 900px;">
+                            <h4 class="text-white text-uppercase mb-4 animated zoomIn">Providing Ideas</h4>
+                            <h1 class="display-1 text-white mb-0 animated zoomIn">Based on Student technical skills and ability</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="w-100" src="/static/assets/img/carousel_2.jpg" alt="Image">
+                    <div class="carousel-caption">
+                        <div class="p-3" style="max-width: 900px;">
+                            <h4 class="text-white text-uppercase mb-4 animated zoomIn">Upto date on</h4>
+                            <h1 class="display-1 text-white mb-0 animated zoomIn">Latest Market Trends & Current Opportunities</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="w-100" src="/static/assets/img/carousel_3.jpg" alt="Image">
+                    <div class="carousel-caption">
+                        <div class="p-3" style="max-width: 900px;">
+                            <h4 class="text-white text-uppercase mb-4 animated zoomIn">Empowering Students</h4>
+                            <h1 class="display-1 text-white mb-0 animated zoomIn">With market-ready and innovative enterpreneurial concepts</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <!-- Carousel End -->
+
+
+    <!-- Facts Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="fact-item bg-light rounded text-center h-100 p-5">
+                        <i class="fa fa-certificate fa-4x text-primary mb-4"></i>
+                        <h5 class="mb-3">Years Experience</h5>
+                        <h1 class="display-5 mb-0" data-toggle="counter-up">1234</h1>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="fact-item bg-light rounded text-center h-100 p-5">
+                        <i class="fa fa-users-cog fa-4x text-primary mb-4"></i>
+                        <h5 class="mb-3">Team Members</h5>
+                        <h1 class="display-5 mb-0" data-toggle="counter-up">1234</h1>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="fact-item bg-light rounded text-center h-100 p-5">
+                        <i class="fa fa-users fa-4x text-primary mb-4"></i>
+                        <h5 class="mb-3">Satisfied Clients</h5>
+                        <h1 class="display-5 mb-0" data-toggle="counter-up">1234</h1>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
+                    <div class="fact-item bg-light rounded text-center h-100 p-5">
+                        <i class="fa fa-check fa-4x text-primary mb-4"></i>
+                        <h5 class="mb-3">Projects Done</h5>
+                        <h1 class="display-5 mb-0" data-toggle="counter-up">1234</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p id="pagnav1">‎ </p><br><br>
+    <!-- Facts End -->
+
+
+        <!-- About Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="img-border">
+                        <img class="img-fluid" src="/static/assets/img/about.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="h-100">
+                        <h6 class="section-title bg-white text-start text-primary pe-3">About Us</h6>
+                        <h1 class="display-6 mb-4 text-white">Empowering Student Entrepreneurs With <span class="text-primary">AI-Powered</span> Startup Ideas</h1>
+                        <p>The AI Startup Idea Recommender System bridges the gap between student potential and market opportunities. We provide college students with personalized, innovative startup ideas tailored to their technical skills, academic background, and personal interests.</p>
+                        <p class="mb-4">Our platform leverages artificial intelligence and machine learning to analyze individual student profiles and match them with viable entrepreneurial concepts. By tracking current market trends and emerging technologies, we ensure students receive up-to-date, market-ready suggestions that align with real-world opportunities.</p>
+                        <div class="d-flex align-items-center mb-4 pb-2">
+                            <img class="flex-shrink-0 rounded-circle" src="/static/assets/img/team-1.jpg" alt="" style="width: 50px; height: 50px;">
+                            <div class="ps-4">
+                                <h6 style="color: lightpink">Project Lead</h6>
+                                <small>AI Startup Recommender System</small>
+                            </div>
+                        </div>
+                        <a class="btn btn-primary rounded-pill py-3 px-5" href="">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+    <!-- Service Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <h6 class="section-title bg-white text-center text-primary px-3">Our Services</h6>
+                <h1 class="display-6 mb-4 text-white">Comprehensive Support for Student Entrepreneurship</h1>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <a class="service-item d-block rounded text-center h-100 p-4" href="">
+                        <img class="img-fluid rounded mb-4" src="/static/assets/img/service-1.jpg" alt="">
+                        <h4 class="mb-0 text-white">AI-Powered Recommendations</h4>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <a class="service-item d-block rounded text-center h-100 p-4" href="">
+                        <img class="img-fluid rounded mb-4" src="/static/assets/img/service-2.jpg" alt="">
+                        <h4 class="mb-0 text-white">Skill-Based Idea Matching</h4>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <a class="service-item d-block rounded text-center h-100 p-4" href="">
+                        <img class="img-fluid rounded mb-4" src="/static/assets/img/service-3.jpg" alt="">
+                        <h4 class="mb-0 text-white">Market Trend Analysis</h4>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <a class="service-item d-block rounded text-center h-100 p-4" href="">
+                        <img class="img-fluid rounded mb-4" src="/static/assets/img/service-4.jpg" alt="">
+                        <h4 class="mb-0 text-white">Expert Consultation</h4>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <a class="service-item d-block rounded text-center h-100 p-4" href="">
+                        <img class="img-fluid rounded mb-4" src="/static/assets/img/service-5.jpg" alt="">
+                        <h4 class="mb-0 text-white">Feasibility Assessment</h4>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <a class="service-item d-block rounded text-center h-100 p-4" href="">
+                        <img class="img-fluid rounded mb-4" src="/static/assets/img/service-6.jpg" alt="">
+                        <h4 class="mb-0 text-white">Competitor Research</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Service End -->
+
+
+    <!-- Feature Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="h-100">
+                        <h6 class="section-title bg-white text-start text-primary pe-3">Why Choose Our System</h6>
+                        <h1 class="display-6 mb-4 text-white">Transforming Student Ideas Into Viable Startups</h1>
+                        <p class="mb-4">Our AI-driven platform analyzes multiple data points to deliver personalized startup recommendations. We combine student profiles with real-time market intelligence to ensure ideas are both innovative and achievable.</p>
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="skill">
+                                    <div class="d-flex justify-content-between">
+                                        <p class="mb-2">Idea Personalization Accuracy</p>
+                                        <p class="mb-2">95%</p>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="skill">
+                                    <div class="d-flex justify-content-between">
+                                        <p class="mb-2">Market Relevance Score</p>
+                                        <p class="mb-2">90%</p>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="skill">
+                                    <div class="d-flex justify-content-between">
+                                        <p class="mb-2">Student Satisfaction Rate</p>
+                                        <p class="mb-2">92%</p>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="img-border">
+                        <img class="img-fluid" src="/static/assets/img/feature.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Feature End -->
+
+
+    <!-- Project Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <h6 class="section-title bg-white text-center text-primary px-3">System Modules</h6>
+                <h1 class="display-6 mb-4 text-white">Explore Our Comprehensive Platform Features</h1>
+            </div>
+            <div class="owl-carousel project-carousel wow fadeInUp" data-wow-delay="0.1s">
+                <div class="project-item border rounded h-30 p-4" data-dot="01">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded" src="/static/assets/img/project-1.jpg" alt="">
+                        <a href="/static/assets/img/project-1.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    </div>
+                    <h6 style="color: lightpink;">AI Recommendation Engine</h6>
+                    <span>Personalized startup ideas based on student profiles and skills analysis</span>
+                </div>
+                <div class="project-item border rounded h-30 p-4" data-dot="02">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded" src="/static/assets/img/project-2.jpg" alt="">
+                        <a href="/static/assets/img/project-2.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    </div>
+                    <h6 style="color: lightpink;">Student Dashboard</h6>
+                    <span>Profile management, idea browsing, and request submission interface</span>
+                </div>
+                <div class="project-item border rounded h-30 p-4" data-dot="03">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded" src="/static/assets/img/project-3.jpg" alt="">
+                        <a href="/static/assets/img/project-2.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    </div>
+                    <h6 style="color: lightpink;">Expert Portal</h6>
+                    <span>Idea contribution, student interaction, and feedback management system</span>
+                </div>
+                <div class="project-item border rounded h-30 p-4" data-dot="04">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded" src="/static/assets/img/project-4.jpg" alt="">
+                        <a href="/static/assets/img/project-4.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    </div>
+                    <h6 style="color: lightpink;">Admin Management</h6>
+                    <span>User management, system monitoring, and content administration tools</span>
+                </div>
+                <div class="project-item border rounded h-30 p-4" data-dot="05">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded" src="/static/assets/img/project-5.jpg" alt="">
+                        <a href="/static/assets/img/project-5.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    </div>
+                    <h6 style="color: lightpink;">Trend Analysis</h6>
+                    <span>Real-time market trend monitoring and opportunity identification</span>
+                </div>
+                <div class="project-item border rounded h-30 p-4" data-dot="06">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded" src="/static/assets/img/project-6.jpg" alt="">
+                        <a href="/static/assets/img/project-6.jpg" data-lightbox="project"><i class="fa fa-eye fa-2x"></i></a>
+                    </div>
+                    <h6 style="color: lightpink;">Feedback System</h6>
+                    <span>Comprehensive review, rating, and continuous improvement mechanism</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Project End -->
+
+
+    <!-- Team Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <h6 class="section-title bg-white text-center text-primary px-3">Our Expert Panel</h6>
+                <h1 class="display-6 mb-4 text-white" >Industry Experts Guiding Student Innovation</h1>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="team-item text-center p-4">
+                        <img class="img-fluid border rounded-circle w-75 p-2 mb-4" src="/static/assets/img/team-1.jpg" alt="">
+                        <div class="team-text">
+                            <div class="team-title">
+                                <h5 style="color: lightpink;">Dr. Sarah Chen</h5>
+                                <span>AI & Machine Learning Specialist</span>
+                            </div>
+                            <div class="team-social">
+                                <a class="btn btn-square btn-primary rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="team-item text-center p-4">
+                        <img class="img-fluid border rounded-circle w-75 p-2 mb-4" src="/static/assets/img/team-2.jpg" alt="">
+                        <div class="team-text">
+                            <div class="team-title">
+                                <h5 style="color: lightpink;">Michael Rodriguez</h5>
+                                <span>Startup Mentor & Investor</span>
+                            </div>
+                            <div class="team-social">
+                                <a class="btn btn-square btn-primary rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="team-item text-center p-4">
+                        <img class="img-fluid border rounded-circle w-75 p-2 mb-4" src="/static/assets/img/team-3.jpg" alt="">
+                        <div class="team-text">
+                            <div class="team-title">
+                                <h5 style="color: lightpink;">Priya Sharma</h5>
+                                <span>Entrepreneurship Educator</span>
+                            </div>
+                            <div class="team-social">
+                                <a class="btn btn-square btn-primary rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-primary rounded-circle" href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Team End -->
+
+
+    <!-- Testimonial Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <h6 class="section-title bg-white text-center text-primary px-3">Testimonials</h6>
+                <h1 class="display-6 mb-4 text-white">What Our Students & Experts Say!</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                <div class="testimonial-item bg-light rounded p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img class="flex-shrink-0 rounded-circle border p-1" src="/static/assets/img/testimonial-1.jpg" alt="">
+                        <div class="ms-4">
+                            <h5 class="mb-1 text-white">Alex Johnson</h5>
+                            <span>Computer Science Student</span>
+                        </div>
+                    </div>
+                    <p class="mb-0">This platform transformed my final year project into a viable startup. The AI recommendations matched my skills perfectly, and expert guidance helped me refine my business model.</p>
+                </div>
+                <div class="testimonial-item bg-light rounded p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img class="flex-shrink-0 rounded-circle border p-1" src="/static/assets/img/testimonial-2.jpg" alt="">
+                        <div class="ms-4">
+                            <h5 class="mb-1 text-white">Professor Robert Kim</h5>
+                            <span>Industry Expert</span>
+                        </div>
+                    </div>
+                    <p class="mb-0">As an expert contributor, I've seen how this system bridges academic learning with real-world entrepreneurship. The personalized approach ensures students get relevant, actionable ideas.</p>
+                </div>
+                <div class="testimonial-item bg-light rounded p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img class="flex-shrink-0 rounded-circle border p-1" src="/static/assets/img/testimonial-3.jpg" alt="">
+                        <div class="ms-4">
+                            <h5 class="mb-1 text-white">Maria Gonzalez</h5>
+                            <span>Engineering Student</span>
+                        </div>
+                    </div>
+                    <p class="mb-0">The market trend analysis helped me identify an emerging opportunity in sustainable tech. I'm now working on a startup that aligns with both my passion and market needs.</p>
+                </div>
+                <div class="testimonial-item bg-light rounded p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <img class="flex-shrink-0 rounded-circle border p-1" src="/static/assets/img/testimonial-4.jpg" alt="">
+                        <div class="ms-4">
+                            <h5 class="mb-1 text-white">David Park</h5>
+                            <span>Business Administration Student</span>
+                        </div>
+                    </div>
+                    <p class="mb-0">The expert consultation feature provided invaluable insights that textbooks couldn't offer. This platform is a game-changer for aspiring student entrepreneurs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-body footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Address</h5>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Aluva, Ernakulam, Kerala</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+91 98463 13493</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>aistartuphelp@gmail.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-square btn-outline-secondary rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-outline-secondary rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-outline-secondary rounded-circle me-1" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square btn-outline-secondary rounded-circle me-0" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Quick Links</h5>
+                    <a class="btn btn-link" href="">About Us</a>
+                    <a class="btn btn-link" href="">Contact Us</a>
+                    <a class="btn btn-link" href="">Our Services</a>
+                    <a class="btn btn-link" href="">Terms & Condition</a>
+                    <a class="btn btn-link" href="">Support</a>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="container-fluid copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="#">AIStartupHelp</a>, All Rights Reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/assets/lib/wow/wow.min.js"></script>
+    <script src="/static/assets/lib/easing/easing.min.js"></script>
+    <script src="/static/assets/lib/waypoints/waypoints.min.js"></script>
+    <script src="/static/assets/lib/counterup/counterup.min.js"></script>
+    <script src="/static/assets/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/static/assets/lib/lightbox/js/lightbox.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="/static/assets/js/main.js"></script>
+</body>
+
+</html>

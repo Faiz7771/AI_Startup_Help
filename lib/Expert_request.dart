@@ -55,6 +55,7 @@ class _Expert_ideaState extends State<Expert_idea> {
             reply: arr[i]['reply']?.toString() ?? '',
             expname: arr[i]['Expert Name']?.toString() ?? '',
             status: arr[i]['Expert Status']?.toString() ?? '',
+            id: arr[i]['id']?.toString() ?? '',
           ));
         }
 
@@ -133,7 +134,7 @@ class _Expert_ideaState extends State<Expert_idea> {
                 const SizedBox(height: 16),
 
                 Text(
-                  'Describe your startup idea or challenge:',
+                  'Describe what kind of idea you want.',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -255,7 +256,7 @@ class _Expert_ideaState extends State<Expert_idea> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Send your first idea to an expert!',
+                    'Send your first idea request to an expert!',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey.shade500,
@@ -398,6 +399,39 @@ class _Expert_ideaState extends State<Expert_idea> {
                       color: Colors.grey.shade800,
                     ),
                   ),
+                  GestureDetector(
+                      onTap: () async {
+                        SharedPreferences sp = await SharedPreferences.getInstance();
+                        String? storedIp = sp.getString('ip');
+                        String? log_id = sp.getString('l_id');
+
+                        if (storedIp == null || log_id == null) {
+                          Fluttertoast.showToast(msg: "Server URL or login info not found");
+                          return;
+                        }
+
+                        final uri = Uri.parse('$storedIp/myapp/add_bookmark/');
+                        var multipartRequest = http.MultipartRequest('POST', uri);
+                        multipartRequest.fields['student_id'] = log_id;
+                        multipartRequest.fields['id'] = request.id; // Using the ExpertRequest's id
+
+                        try {
+                          var response = await multipartRequest.send();
+                          var respStr = await response.stream.bytesToString();
+                          var data = jsonDecode(respStr);
+
+                          if (response.statusCode == 200 && data['status'] == "Bookmarked Successfully!") {
+                            Fluttertoast.showToast(msg: "Bookmarked Successfully!");
+                          } else {
+                            Fluttertoast.showToast(msg: "Failed to bookmark");
+                          }
+                        } catch (e) {
+                          print('Error bookmarking: $e');
+                          Fluttertoast.showToast(msg: "Error: ${e.toString()}");
+                        }
+                      },
+                      child: Icon(Icons.bookmark)
+                  )
                 ],
               ),
             ),
@@ -524,6 +558,7 @@ class ExpertRequest {
   final String reply;
   final String expname;
   final String status;
+  final String id;
 
   ExpertRequest({
     required this.description,
@@ -531,5 +566,6 @@ class ExpertRequest {
     required this.reply,
     required this.expname,
     required this.status,
+    required this.id
   });
 }

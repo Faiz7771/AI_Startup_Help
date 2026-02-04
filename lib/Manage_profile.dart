@@ -22,6 +22,13 @@ class _Manage_profState extends State<manage_prof> {
   String? pin;
   String? photo;
   String? ipstr;
+  // Career fields
+  String? academics;
+  String? techSkills;
+  String? interests;
+  String? prefIndustry;
+  String? investmentCap;
+
   bool _isLoading = true;
 
   Future<void> myprofile() async {
@@ -51,6 +58,14 @@ class _Manage_profState extends State<manage_prof> {
           phone = data['phone'] ?? 'Not provided';
           pin = data['pin'] ?? 'Not provided';
           photo = data['photo'] ?? '';
+
+          // Get career data - use empty string if not provided
+          academics = data['academics'] ?? '';
+          techSkills = data['tech_skills'] ?? '';
+          interests = data['interests'] ?? '';
+          prefIndustry = data['pref_industry'] ?? '';
+          investmentCap = data['investment_cap'] ?? '';
+
           _isLoading = false;
         });
       } else {
@@ -181,7 +196,7 @@ class _Manage_profState extends State<manage_prof> {
               ),
             ),
 
-            // Profile Details Card
+            // Personal Information Card
             Container(
               margin: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -243,6 +258,121 @@ class _Manage_profState extends State<manage_prof> {
                     label: 'Pincode',
                     value: pin ?? 'Not provided',
                   ),
+                ],
+              ),
+            ),
+
+            // Career Preferences Card - ALWAYS SHOW, but fields only if they exist
+            Container(
+              margin: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+                border: Border.all(color: Colors.grey.shade200),
+              ),
+              child: Column(
+                children: [
+                  // Section Header
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.work_outline_rounded,
+                          color: Colors.orange.shade700,
+                          size: 24,
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          'Career Preferences',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.orange.shade800,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // Divider
+                  Divider(
+                    color: Colors.grey.shade200,
+                    height: 1,
+                  ),
+
+                  // Career Details - show fields only if they have data
+                  if ((academics ?? '').isNotEmpty)
+                    _buildDetailItem(
+                      icon: Icons.school_outlined,
+                      label: 'Academics',
+                      value: academics!,
+                    ),
+
+                  if ((techSkills ?? '').isNotEmpty)
+                    _buildDetailItem(
+                      icon: Icons.computer_outlined,
+                      label: 'Technical Skills',
+                      value: techSkills!,
+                    ),
+
+                  if ((interests ?? '').isNotEmpty)
+                    _buildDetailItem(
+                      icon: Icons.favorite_border_rounded,
+                      label: 'Interests',
+                      value: interests!,
+                    ),
+
+                  if ((prefIndustry ?? '').isNotEmpty)
+                    _buildDetailItem(
+                      icon: Icons.business_outlined,
+                      label: 'Preferred Industry',
+                      value: prefIndustry!,
+                    ),
+
+                  if ((investmentCap ?? '').isNotEmpty)
+                    _buildDetailItem(
+                      icon: Icons.attach_money_outlined,
+                      label: 'Investment Capacity',
+                      value: investmentCap!,
+                    ),
+
+                  // If no career data exists, show a message
+                  if ((academics ?? '').isEmpty &&
+                      (techSkills ?? '').isEmpty &&
+                      (interests ?? '').isEmpty &&
+                      (prefIndustry ?? '').isEmpty &&
+                      (investmentCap ?? '').isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.info_outline_rounded,
+                            color: Colors.grey.shade400,
+                            size: 24,
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Text(
+                              'No career preferences added yet',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey.shade600,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -374,7 +504,7 @@ class _Manage_profState extends State<manage_prof> {
                     color: Colors.grey.shade800,
                     fontWeight: FontWeight.w500,
                   ),
-                  maxLines: 2,
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],

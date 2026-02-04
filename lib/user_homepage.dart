@@ -6,12 +6,14 @@ import 'package:ai_startup_help/Expert_request.dart';
 import 'package:ai_startup_help/Feedback.dart';
 import 'package:ai_startup_help/Manage_profile.dart';
 import 'package:ai_startup_help/Review_rating.dart';
-import 'package:ai_startup_help/Trend_idea.dart';
-import 'package:ai_startup_help/get_idea.dart';
+import 'package:ai_startup_help/bookmark_page.dart';
 import 'package:ai_startup_help/main.dart';
+import 'package:ai_startup_help/start%20up%20ideas.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+// import 'chat ai.dart';
+
 
 class home extends StatefulWidget {
   const home({super.key});
@@ -133,7 +135,7 @@ class _homeState extends State<home> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Ideas()),
+                        MaterialPageRoute(builder: (context) => ChatbotPage()),
                       );
                     },
                   ),
@@ -144,16 +146,6 @@ class _homeState extends State<home> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => StudentDetailsPage()),
-                      );
-                    },
-                  ),
-                  FlashCardButton(
-                    title: 'Look into Trending Ideas',
-                    imagePath: 'assets/Trending.png',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Trending()),
                       );
                     },
                   ),
@@ -197,6 +189,9 @@ class _homeState extends State<home> {
                       );
                     },
                   ),
+
+
+
                   FlashCardButton(
                     title: 'Review and Rate our app✨',
                     imagePath: 'assets/Review.png',
@@ -204,6 +199,16 @@ class _homeState extends State<home> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Review()),
+                      );
+                    },
+                  ),
+                  FlashCardButton(
+                    title: 'Saved Ideas',
+                    imagePath: 'assets/bookmark.png',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BookmarkPage()),
                       );
                     },
                   ),

@@ -1,0 +1,22 @@
+{% extends 'Admin/admin_header.html' %}
+<html>
+<head>
+    <title>Edit inserted startup ideas</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+{% block body %}
+<body>
+<form action="/myapp/edit_idea_post/" method="post">
+    <input type="hidden" value="{{ data.id }}" name="id">
+    <h1>Edit idea</h1>
+    <label>title:</label>
+    <input type="text" placeholder="-Enter title-" value="{{ data.title }}" name="TITLE"><br><br>
+    <label>description:</label>
+    <input type="text" placeholder="-Enter Description-" value="{{ data.description }}" name="DESCRIPTION"><br><br>
+    <label>technology:</label>
+    <input type="text" placeholder="-Enter tech-" value="{{ data.technologies }}" name="TECHNOLOGY"><br><br>
+    <input type="submit" value="Submit">
+</form>
+</body>
+{% endblock %}
+</html>

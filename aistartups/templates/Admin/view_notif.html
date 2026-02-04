@@ -1,0 +1,31 @@
+{% extends 'Admin/admin_header.html' %}
+<html>
+<head>
+    <title>View Notifications</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+{% block body %}
+<body>
+<table border="2">
+    <thead>
+    <th>SI_No</th>
+    <th>Title</th>
+    <th>Notification</th>
+    <th>Date</th>
+    <th>Action</th>
+    </thead>
+    {% for i in data %}
+    <tbody>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ i.title }}</td>
+    <td>{{ i.notification }}</td>
+    <td>{{ i.date }}</td>
+    <td>
+        <a href="/myapp/delete_notif/{{ i.id }}" onclick="return confirm('Are you sure you want to remove this notification?')">Delete</a><br>
+    </td>
+    </tbody>
+    {% endfor %}
+</table>
+</body>
+{% endblock %}
+</html>

@@ -1,0 +1,39 @@
+{% extends "Expert/expert_header.html" %}
+{% block exp %}
+<html>
+<head>
+    <title>View Student Doubts</title>
+    <link rel="stylesheet" href="/static/assets/css/professional_styles.css">
+</head>
+<body>
+<br>
+<table>
+    <thead>
+    <th>SI_No</th>
+    <th>Date</th>
+    <th>Student_Details</th>
+    <th>Doubts</th>
+    <th>Status</th>
+    <th>Reply</th>
+    <th>Action</th>
+    </thead>
+    {% for i in data %}
+    <tbody>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ i.date }}</td>
+    <td>
+            Name: {{ i.user.name }}<br>
+        Phone: {{ i.user.email }}<br>
+    </td>
+    <td>{{ i.doubt }}</td>
+    <td>{{ i.status }}</td>
+    <td>{{ i.reply }}</td>
+    <td>
+        <a href="/myapp/send_reply_e/{{ i.id }}">Reply</a><br>
+    </td>
+    </tbody>
+    {% endfor %}
+</table>
+</body>
+{% endblock %}
+</html>
