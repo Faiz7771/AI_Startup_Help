@@ -1029,3 +1029,37 @@ def remove_bookmark(request):
         return JsonResponse({'status': 'error', 'message': 'Student not found'})
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)})
+
+
+@csrf_exempt
+def get_notifications(request):
+    """
+    API endpoint to fetch all notifications ordered by latest date first
+    """
+    if request.method == 'GET':
+        try:
+            # Import your Notifications model
+            from .models import Notifications
+
+            # Fetch all notifications ordered by date descending (latest first)
+            notifications = Notifications.objects.all().order_by('-date')
+
+            # Convert to list of dictionaries
+            notifications_list = []
+            for notification in notifications:
+                notifications_list.append({
+                    'id': notification.id,
+                    'date': notification.date.strftime('%Y-%m-%d'),  # Format date as string
+                    'title': notification.title,
+                    'notification': notification.notification,
+                })
+
+            return JsonResponse(notifications_list, safe=False, status=200)
+
+        except Exception as e:
+            return JsonResponse({
+                'error': str(e),
+                'notifications': []
+            }, status=500)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)

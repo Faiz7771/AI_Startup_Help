@@ -42,6 +42,17 @@ class _homeState extends State<home> {
         foregroundColor: Colors.white,
         elevation: 4,
         actions: [
+          // Notification Bell Icon
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationsPage()),
+              );
+            },
+            icon: Icon(Icons.notifications),
+            tooltip: 'Notifications',
+          ),
           IconButton(
             onPressed: () {
               Navigator.push(
@@ -189,9 +200,6 @@ class _homeState extends State<home> {
                       );
                     },
                   ),
-
-
-
                   FlashCardButton(
                     title: 'Review and Rate our app✨',
                     imagePath: 'assets/Review.png',
@@ -264,5 +272,154 @@ class _homeState extends State<home> {
         _isLoading = false;
       });
     }
+  }
+}
+
+// ================================
+// Add this NotificationsPage class at the end of the file
+// ================================
+
+class NotificationsPage extends StatefulWidget {
+  const NotificationsPage({super.key});
+
+  @override
+  State<NotificationsPage> createState() => _NotificationsPageState();
+}
+
+class _NotificationsPageState extends State<NotificationsPage> {
+  List<Map<String, dynamic>> notifications = [];
+  bool _isLoading = true;
+  String? ipstr = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchNotifications();
+  }
+
+  Future<void> fetchNotifications() async {
+    try {
+      SharedPreferences sp = await SharedPreferences.getInstance();
+      ipstr = sp.getString('ip');
+
+      final response = await http.get(
+        Uri.parse('$ipstr/myapp/get_notifications/'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          notifications = List<Map<String, dynamic>>.from(data);
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        print('Failed to fetch notifications: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching notifications: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Notifications'),
+        backgroundColor: Colors.orange.shade700,
+        foregroundColor: Colors.white,
+        elevation: 4,
+      ),
+      body: _isLoading
+          ? Center(
+        child: CircularProgressIndicator(
+          color: Colors.orange.shade700,
+        ),
+      )
+          : notifications.isEmpty
+          ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.notifications_off,
+              size: 60,
+              color: Colors.grey.shade400,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'No notifications yet',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey.shade600,
+              ),
+            ),
+          ],
+        ),
+      )
+          : RefreshIndicator(
+        color: Colors.orange.shade700,
+        onRefresh: fetchNotifications,
+        child: ListView.builder(
+          padding: EdgeInsets.all(8),
+          itemCount: notifications.length,
+          itemBuilder: (context, index) {
+            final notification = notifications[index];
+            return Card(
+              margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+              elevation: 2,
+              child: ListTile(
+                contentPadding: EdgeInsets.all(16),
+                leading: Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.orange.shade50,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.notifications_active,
+                    color: Colors.orange.shade700,
+                  ),
+                ),
+                title: Text(
+                  notification['title'] ?? '',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 8),
+                    Text(
+                      notification['notification'] ?? '',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey.shade700,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Date: ${notification['date'] ?? ''}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade500,
+                      ),
+                    ),
+                  ],
+                ),
+                isThreeLine: true,
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }

@@ -71,5 +71,6 @@ urlpatterns = [
     path("save_student_details/",views.save_student_details),
     path("add_bookmark/", views.add_bookmark),
     path("get_bookmarks/", views.get_bookmarks, name='get_bookmarks'),
-    path("remove_bookmark/", views.remove_bookmark, name='remove_bookmark')
+    path("remove_bookmark/", views.remove_bookmark, name='remove_bookmark'),
+    path('get_notifications/', views.get_notifications, name='get_notifications')
 ]
